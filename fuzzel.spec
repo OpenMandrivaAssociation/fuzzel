@@ -42,9 +42,10 @@ Features:
  
 %build
 %meson \
-       -Denable-cairo=enabled \ 
+       -Denable-cairo=enabled \
        -Dpng-backend=libpng \
        -Dsvg-backend=nanosvg
+
 %meson_build
  
 %install
