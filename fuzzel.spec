@@ -1,21 +1,20 @@
 Name:           fuzzel
 Version:        1.9.2
-Release:        %autorelease
+Release:        1
 Summary:        Application launcher for wlroots based Wayland compositors
  
 License:        MIT
 URL:            https://codeberg.org/dnkl/fuzzel
-Source0:        %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
  
-BuildRequires:  gcc
 BuildRequires:  meson >= 0.58
 BuildRequires:  tllist-static
- 
+
 BuildRequires:  pkgconfig(cairo)
 BuildRequires:  pkgconfig(fcft) >= 3.0.0
 BuildRequires:  pkgconfig(fontconfig)
 BuildRequires:  pkgconfig(libpng)
-# BuildRequires:  pkgconfig(librsvg-2.0)
+#BuildRequires:  pkgconfig(librsvg-2.0)
 BuildRequires:  pkgconfig(pixman-1)
 BuildRequires:  pkgconfig(scdoc)
 BuildRequires:  pkgconfig(tllist) >= 1.0.1
@@ -42,20 +41,17 @@ Features:
  
  
 %build
-%meson                  \
-  -Dsvg-backend=nanosvg \
-  %{nil}
+%meson \
+       -Denable-cairo=enabled \ 
+       -Dpng-backend=libpng \
+       -Dsvg-backend=nanosvg
 %meson_build
  
 %install
 %meson_install
 # Will be installed to correct location with rpm macros
 rm %{buildroot}%{_docdir}/%{name}/LICENSE
- 
- 
-%check
-%meson_test
- 
+
 %files
 %doc CHANGELOG.md README.md
 %license LICENSE
